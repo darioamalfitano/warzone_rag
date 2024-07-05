@@ -1,0 +1,40 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://monorail.proxy.rlwy.net:18632
+    username: postgres
+    password: dnzSCNeONkTcaKINVJZctiKPMYuDFpiQ
+  ai:
+    vectorstore:
+      pgvector:
+        index-type: HNSW
+        distance-type: COSINE_DISTANCE
+        dimensions: 1536
+    retry:
+      backoff:
+        initial-interval: 2000
+        max-interval: 10000
+        multiplier: 4
+      max-attempts: 20
+    ollama:
+      base-url: host.docker.
+      embedding:
+        enabled: true
+      chat:
+        model: mistral
+        options:
+          num-ctx: 32768
+          num-batch: 768
+          num-thread: 8
+          top-k: 3
+          top-p: 0.1
+          temperature: 0.1
+        enabled: true
+
+
+#      milvus:
+#        collection-name: ${MILVUS_COLLECTION_NAME:vector_store1}
+#        embedding-dimension: ${MILVUS_EMBEDDING_DIM:768}
+database:
+  init: ${DATABASE_INIT:false}
+queries:
+  top-k: ${QUERIES_TOP-K:1}
